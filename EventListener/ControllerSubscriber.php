@@ -37,10 +37,12 @@ class ControllerSubscriber implements EventSubscriberInterface
         $requiredScopes = array();
 
         foreach (array_merge($classAnnotations, $methodAnnotations) as $annotation) {
-            if ($annotation instanceof $this->annotationClass) {
-                if (!$this->scopeManager->hasScopes($annotation->getScopes())) {
-                    $requiredScopes = array_merge($requiredScopes, $annotation->getScopes());
-                }
+            if (!$annotation instanceof $this->annotationClass) {
+                continue;
+            }
+
+            if (!$this->scopeManager->hasScopes($annotation->getScopes())) {
+                $requiredScopes = array_merge($requiredScopes, $annotation->getScopes());
             }
         }
 
@@ -53,7 +55,7 @@ class ControllerSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
-        $url =  $this->scopeManager->obtainScopeUrl(
+        $url = $this->scopeManager->obtainScopeUrl(
             $scopes,
             $request->getRequestUri()
         );

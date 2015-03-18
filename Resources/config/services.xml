@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="isometriks_google_api.client.class">Google_Client</parameter>
+        <parameter key="isometriks_google_api.client_factory.class">Isometriks\Bundle\GoogleApiBundle\Google\ClientFactory</parameter>
+        <parameter key="isometriks_google_api.scope_manager.class">Isometriks\Bundle\GoogleApiBundle\Google\ScopeManager</parameter>
+        <parameter key="isometriks_google_api.event_listener.token_subscriber.class">Isometriks\Bundle\GoogleApiBundle\EventListener\TokenSubscriber</parameter>
+        <parameter key="isometriks_google_api.event_listener.controller_subscriber.class">Isometriks\Bundle\GoogleApiBundle\EventListener\ControllerSubscriber</parameter>
+        <parameter key="isometriks_google_api.storage.session.class">Isometriks\Bundle\GoogleApiBundle\Storage\SessionStorage</parameter>
+        <parameter key="isometriks_google_api.storage.user.class">Isometriks\Bundle\GoogleApiBundle\Storage\UserStorage</parameter>
+    </parameters>
+
+    <services>
+        <!-- Client Factory -->
+        <service id="isometriks_google_api.client_factory" class="%isometriks_google_api.client_factory.class%">
+            <argument type="service" id="event_dispatcher" />
+            <argument>%isometriks_google_api.client.class%</argument>
+            <argument>%isometriks_google_api.client.config%</argument>
+        </service>
+
+        <!-- Google Client -->
+        <service
+            id="isometriks_google_api.client"
+            class="%isometriks_google_api.client.class%"
+            factory-service="isometriks_google_api.client_factory"
+            factory-method="createClient"
+        />
+
+        <!-- Scope Manager -->
+        <service id="isometriks_google_api.scope_manager" class="%isometriks_google_api.scope_manager.class%">
+            <argument type="service" id="isometriks_google_api.client" />
+            <argument type="service" id="router" />
+        </service>
+
+        <!-- Listeners -->
+        <service id="isometriks_google_api.event_listener.token_subscriber" class="%isometriks_google_api.event_listener.token_subscriber.class%">
+            <argument type="service" id="isometriks_google_api.storage" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="isometriks_google_api.event_listener.controller_subscriber" class="%isometriks_google_api.event_listener.controller_subscriber.class%">
+            <argument type="service" id="annotation_reader" />
+            <argument type="service" id="isometriks_google_api.scope_manager" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <!-- Storage -->
+        <service id="isometriks_google_api.storage.session" class="%isometriks_google_api.storage.session.class%" public="false">
+            <argument type="service" id="session" />
+        </service>
+
+        <service id="isometriks_google_api.storage.user" class="%isometriks_google_api.storage.user.class%" public="false" abstract="true">
+            <argument type="service" id="security.context" />
+        </service>
+    </services>
+</container>

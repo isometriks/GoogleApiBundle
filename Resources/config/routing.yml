@@ -1,0 +1,9 @@
+isometriks_google_authenticate:
+    path: /authenticate
+    defaults:
+        _controller: IsometriksGoogleApiBundle:OAuth:authenticate
+
+isometriks_google_redirect:
+    path: /redirect
+    defaults:
+        _controller: IsometriksGoogleApiBundle:OAuth:redirect

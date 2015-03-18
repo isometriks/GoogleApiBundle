@@ -61,6 +61,12 @@ class MyController extends Controller
     public function indexAction()
     {
         // Will only execute if we have all 3 permissions
+
+        // Use the services available in the Google PHP API
+        $client = $this->get('isometriks_google_api.client');
+        $analytics = new \Google_Service_Analytics($client);
+
+        var_dump($analytics->management_accounts->listManagementAccounts()); // etc
     }
 }
 ```

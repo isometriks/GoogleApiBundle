@@ -8,6 +8,20 @@ Installation
 $ php composer.phar require isometriks/google-api-bundle dev-master
 ```
 
+Add routing:
+
+```yaml
+isometriks_google_api:
+    resource: "@IsometriksGoogleApiBundle/Resources/config/routing.yml"
+    prefix: /google
+```
+
+Note: Your `redirect_uri` below and in the developer console should match
+that of the `isometriks_google_redirect` route. So if you do as above, then
+redirect_uri below in dev environment should be:
+http://example.com/app_dev.php/google/redirect and without app_dev.php for
+production.
+
 Configuration:
 --------------
 
@@ -128,6 +142,14 @@ class UserStorage extends BaseUserStorage
     }
 }
 
+```
+
+And remember to change the config:
+
+```yaml
+isometriks_google_api:
+    service:
+        storage: app_bundle.storage.user_storage
 ```
 
 You can extend the abstract service we provide: `isometriks_google_api.storage.user_storage`

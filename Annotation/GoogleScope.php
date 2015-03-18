@@ -9,7 +9,7 @@ class GoogleScope
 {
     public function __construct($options)
     {
-        $this->scopes = (array)$options['value'];
+        $this->scopes = (array) $options['value'];
     }
 
     public function getScopes()

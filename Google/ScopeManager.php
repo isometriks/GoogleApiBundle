@@ -70,7 +70,7 @@ class ScopeManager
         }
 
         if (0 !== strpos($scope, 'http')) {
-            return 'https://www.googleapis.com/auth/' . $scope;
+            return 'https://www.googleapis.com/auth/'.$scope;
         }
 
         return $scope;

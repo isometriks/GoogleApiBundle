@@ -21,7 +21,7 @@ class ClientFactory
 
     public function createClient()
     {
-        $client = new $this->clientClass;
+        $client = new $this->clientClass();
         $client->setApplicationName($this->config['application_name']);
         $client->setClientId($this->config['client_id']);
         $client->setClientSecret($this->config['client_secret']);

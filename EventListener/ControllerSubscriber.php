@@ -36,7 +36,7 @@ class ControllerSubscriber implements EventSubscriberInterface
 
         $requiredScopes = array();
 
-        foreach(array_merge($classAnnotations, $methodAnnotations) as $annotation) {
+        foreach (array_merge($classAnnotations, $methodAnnotations) as $annotation) {
             if ($annotation instanceof $this->annotationClass) {
                 if (!$this->scopeManager->hasScopes($annotation->getScopes())) {
                     $requiredScopes = array_merge($requiredScopes, $annotation->getScopes());
@@ -59,7 +59,7 @@ class ControllerSubscriber implements EventSubscriberInterface
         );
 
         // Set request parameter for redirect
-        $request->attributes->set('url', '/' . ltrim($url, '/'));
+        $request->attributes->set('url', '/'.ltrim($url, '/'));
 
         // Set controller to redirect controller instead
         $event->setController(array(new RedirectController(), 'redirectAction'));

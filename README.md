@@ -51,7 +51,7 @@ use Isometriks\Bundle\GoogleApiBundle\Annotation\GoogleScope;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * @GoogleScope({"gmail.readyonly"})
+ * @GoogleScope({"gmail.readonly"})
  */
 class MyController extends Controller
 {

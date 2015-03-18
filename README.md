@@ -155,3 +155,41 @@ isometriks_google_api:
 You can extend the abstract service we provide: `isometriks_google_api.storage.user_storage`
 As noted in the above class you will need to either add setter injection or add an argument
 to the constructor so you can make sure that the user is persisted in your ORM / other implementation.
+
+Display a "Connect" screen
+--------------------------
+
+You can easily attach into the events to display a "connect" button view before
+sending the user to Google for the token using the `Events::OAUTH_PRE_AUTH` event:
+
+```
+<?php
+
+// ...
+
+class PreAuthListener implements EventSubscriberInterface
+{
+    protected $twig;
+
+    public function __construct(\Twig_Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
+    public function onPreAuth(ClientEvent $event)
+    {
+        // Or use your own template, ours is mostly just an example
+        $content = $this->twig->render('IsometriksGoogleApiBundle:OAuth:connect.html.twig', array(
+            'auth_url' => $event->getClient()->createAuthUrl(),
+        ));
+
+        $event->setResponse(new Response($content));
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            Events::OAUTH_PRE_AUTH => 'onPreAuth',
+        );
+    }
+}

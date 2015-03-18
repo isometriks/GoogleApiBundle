@@ -19,9 +19,21 @@ class TokenSubscriber implements EventSubscriberInterface
 
     public function onClientCreate(ClientEvent $event)
     {
+        $client = $event->getClient();
+
         // Set token if exists
         if ($this->storage->hasToken()) {
-            $event->getClient()->setAccessToken($this->storage->getToken());
+            $client->setAccessToken($this->storage->getToken());
+        }
+
+        // Refresh the token if possible
+        if ($client->getAccessToken() && $client->isAccessTokenExpired() && $client->getRefreshToken()) {
+
+            // Refresk the token
+            $client->refreshToken($client->getRefreshToken());
+
+            // Store the new token
+            $this->storage->setToken($client->getAccessToken());
         }
     }
 

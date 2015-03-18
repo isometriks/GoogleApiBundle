@@ -60,7 +60,6 @@ Without Annotations
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MyController extends Controller
 {
@@ -72,13 +71,13 @@ class MyController extends Controller
         $scopeManager = $this->get('isometriks_google_api.scope_manager');
 
         if (!$scopeManager->hasScope('calendar.readonly')) {
-            return new RedirectResponse($scopeManager->obtainScopeUrl(
+            return $this->redirect($scopeManager->obtainScopeUrl(
                 array('calendar.readonly'),
                 $this->generateUrl('homepage')
             ));
         }
 
-        // obtainScope(array $scopes, $returnUrl)
+        // obtainScopeUrl(array $scopes, $returnUrl)
     }
 }
 ```

@@ -15,6 +15,6 @@ abstract class UserStorage implements StorageInterface
 
     protected function getUser()
     {
-        return $this->context->getToken()->getUser() ?: false;
+        return ($this->context->getToken()) ? $this->context->getToken()->getUser() : false;
     }
 }

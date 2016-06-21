@@ -23,12 +23,9 @@
         </service>
 
         <!-- Google Client -->
-        <service
-            id="isometriks_google_api.client"
-            class="%isometriks_google_api.client.class%"
-            factory-service="isometriks_google_api.client_factory"
-            factory-method="createClient"
-        />
+        <service id="isometriks_google_api.client" class="%isometriks_google_api.client.class%">
+            <factory service="isometriks_google_api.client_factory" method="createClient" />
+        </service>
 
         <!-- Scope Manager -->
         <service id="isometriks_google_api.scope_manager" class="%isometriks_google_api.scope_manager.class%">

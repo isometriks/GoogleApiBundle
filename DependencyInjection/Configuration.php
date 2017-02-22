@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('application_name')->end()
                         ->scalarNode('client_id')->end()
                         ->scalarNode('client_secret')->end()
-                        ->variableNode('redirect_uri')->end()
+                        ->variableNode('redirect_route')->defaultValue('isometriks_google_redirect')->end()
                         ->scalarNode('developer_key')->end()
                         ->scalarNode('include_granted_scopes')->defaultFalse()->end()
                         ->scalarNode('access_type')->defaultValue('online')->end()

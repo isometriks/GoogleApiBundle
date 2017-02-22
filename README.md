@@ -20,7 +20,7 @@ Note: Your `redirect_uri` below and in the developer console should match
 that of the `isometriks_google_redirect` route. So if you do as above, then
 redirect_uri below in dev environment should be:
 http://example.com/app_dev.php/google/redirect and without app_dev.php for
-production.
+production. `redirect_route` will generate `redirect_uri`. 
 
 Configuration:
 --------------
@@ -31,7 +31,7 @@ isometriks_google_api:
         application_name:       ~
         client_id:              ~
         client_secret:          ~
-        redirect_uri:           ~
+        redirect_route:         ~
         developer_key:          ~
         include_granted_scopes: false
         access_type:            online # or offline

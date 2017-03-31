@@ -22,7 +22,11 @@ class SessionStorage implements StorageInterface
 
     public function hasToken()
     {
-        return $this->session->has(self::TOKEN_KEY);
+        if ($this->session->isStarted()) {
+            return $this->session->has(self::TOKEN_KEY);
+        } else {
+            return false;
+        }
     }
 
     public function removeToken()
